@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { v4 as uuid } from 'uuid';
@@ -16,6 +17,7 @@ import {
   type ITaskFormConfig,
   TaskForm,
 } from '@/components/shared/task-form';
+import { TASK } from '@/routes';
 import { AppDispatch, useAppSelector } from '@/store';
 
 import './style.scss';
@@ -25,6 +27,7 @@ export const ListCreator = () => {
   const [dataInitialization, setDataInitialization] = useState<boolean>(true);
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation('home');
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(mainThunk.getTaskList()).finally(() =>
@@ -66,8 +69,12 @@ export const ListCreator = () => {
     }
   };
 
-  const deleteListHandler = (id: string) => {
-    dispatch(mainThunk.deleteTask(id));
+  const deleteListHandler = (taskId: string) => {
+    dispatch(mainThunk.deleteTask(taskId));
+  };
+
+  const navigateHandler = (taskId: string) => {
+    navigate(`${TASK}/${taskId}`);
   };
 
   if (!list && error) {
@@ -93,12 +100,16 @@ export const ListCreator = () => {
       </div>
       {isLoading || dataInitialization ? (
         <div className={'list-creator__loader'}>
-          <CircularProgress />
+          <CircularProgress data-testid={'loader'} />
         </div>
       ) : (
         <div className={'list-creator__table-block'}>
           {!!list.length && (
-            <ListTable list={list} deleteTask={deleteListHandler} />
+            <ListTable
+              list={list}
+              deleteTask={deleteListHandler}
+              onRowClick={navigateHandler}
+            />
           )}
           {!list.length && <InfoTitle title={t('no_data')} />}
         </div>

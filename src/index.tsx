@@ -4,7 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 
 import { Header } from '@/components/business/header';
 import { router } from '@/routes';
-import { store } from '@/store';
+import { setupStore } from '@/store';
 
 import './style/style.scss';
 
@@ -14,7 +14,7 @@ const rootElement = document.getElementById('root');
 const container = createRoot(rootElement);
 
 container.render(
-  <Provider store={store}>
+  <Provider store={setupStore()}>
     <Header />
     <RouterProvider router={router} />
   </Provider>,

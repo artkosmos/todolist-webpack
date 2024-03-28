@@ -1,12 +1,10 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 
 import clsx from 'clsx';
 
 import { ITask } from '@/common/types';
 import { TableBodyRow } from '@/components/shared/list-table';
-import { TASK } from '@/routes';
 
 import './style.scss';
 
@@ -14,10 +12,15 @@ type Props = {
   list: ITask[];
   className?: string;
   deleteTask?: (id: string) => void;
+  onRowClick?: (id: string) => void;
 };
 
-export const ListTable = ({ list, deleteTask, className }: Props) => {
-  const navigate = useNavigate();
+export const ListTable = ({
+  list,
+  deleteTask,
+  className,
+  onRowClick,
+}: Props) => {
   const { t } = useTranslation('home');
 
   const taskList = useMemo(() => {
@@ -25,7 +28,7 @@ export const ListTable = ({ list, deleteTask, className }: Props) => {
       return (
         <TableBodyRow
           data-testid={`table-row-${task.id}`}
-          onClick={() => navigate(`${TASK}/${task.id}`)}
+          onClick={() => onRowClick(task.id)}
           key={task.id}
           task={task}
           deleteRow={deleteTask}

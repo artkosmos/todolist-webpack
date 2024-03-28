@@ -1,6 +1,6 @@
+import { mockedTaskList } from '@/__mocks__';
 import type { ITask } from '@/common/types';
 
-import { mockedTaskList } from './mocks';
 import taskService from './task.service';
 
 describe('task service', () => {

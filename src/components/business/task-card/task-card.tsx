@@ -68,7 +68,12 @@ export const TaskCard = ({ className }: Props) => {
   };
 
   if (isLoading) {
-    return <CircularProgress className={'task-card__loader'} />;
+    return (
+      <CircularProgress
+        data-testid={'loader'}
+        className={'task-card__loader'}
+      />
+    );
   }
 
   if (!currentTask) {

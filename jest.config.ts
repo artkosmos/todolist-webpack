@@ -7,6 +7,7 @@ const config: Config = {
     '^.+\\.(css|scss|png|img)$': 'jest-transform-stub',
   },
   testEnvironment: 'jest-environment-jsdom',
+  setupFilesAfterEnv: ['./src/__mocks__/i18n-jest.ts'],
 };
 
 export default config;

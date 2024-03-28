@@ -16,8 +16,8 @@ export const Header = () => {
   }, [t]);
 
   return (
-    <header className={'header'}>
-      <span className={'header__title'}>Crazy Planner 🤪</span>
+    <header className={'header'} data-testid={'header'}>
+      <span className={'header__title'}>{t('app_name')} 🤪</span>
       <Select
         className={'header__select'}
         label={t('select_label')}
